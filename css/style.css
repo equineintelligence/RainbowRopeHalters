@@ -671,3 +671,34 @@ body {
         padding: 1.5rem;
     }
 }
+/* Add these new rules to your existing CSS file */
+
+/* For the new logo image */
+.logo-image {
+    height: 50px; /* Adjust this value to fit your logo's size */
+    vertical-align: middle;
+}
+
+/* For the new cart counter badge */
+.cart-counter {
+    display: inline-block;
+    background-color: var(--secondary-color); /* The pink color */
+    color: white;
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 50%;
+    margin-left: 8px;
+    vertical-align: middle; /* Aligns it nicely with the text */
+    transition: transform 0.2s ease;
+}
+
+/* Add this to the bottom of your style.css */
+.forgot-password-link {
+    display: block;
+    text-align: right;
+    font-size: 0.9rem;
+    margin-top: 8px;
+    color: var(--primary-color);
+    text-decoration: none;
+}

@@ -13,12 +13,18 @@
     <header class="header">
         <div class="container">
             <nav class="nav">
-                <a href="#" onclick="showPage('home')" class="nav-brand">Mystic Manes</a>
+                <a href="#" onclick="showPage('home')" class="nav-brand">
+                    <img src="images/logo.png" alt="Mystic Manes Logo" class="logo-image">
+                </a>
                 <ul class="nav-menu">
                     <li><a href="#" onclick="showPage('home')" class="nav-link">Home</a></li>
                     <li><a href="#" onclick="showPage('shop')" class="nav-link">Shop</a></li>
                     <li><a href="#" onclick="showPage('about')" class="nav-link">About</a></li>
-                    <li><a href="#" onclick="showPage('cart')" class="nav-link cart-link"><i class="fas fa-shopping-cart"></i> Cart</a></li>
+                    <li>
+                        <a href="#" onclick="showPage('cart')" class="nav-link cart-link">
+                            <i class="fas fa-shopping-cart"></i> Cart <span id="cart-counter" class="cart-counter">0</span>
+                        </a>
+                    </li>
                     <li><a href="#" onclick="showPage('checkout')" class="nav-link"><i class="fas fa-user"></i> Account</a></li>
                 </ul>
             </nav>
@@ -77,15 +83,29 @@
                 <button onclick="showPage('checkout')" class="btn btn-primary full-width mt-3">Proceed to Checkout</button>
             </div>
         </div>
+        
+        <div id="about" class="page hidden">
+            <div class="card about-content">
+                <h2 class="section-title">Our Story</h2>
+                <p class="story-text">Welcome! I'm the creator behind Mystic Manes. My journey started with my own horse, my real-life unicorn. I wanted a halter that was as strong and unique as our bond, so I decided to make my own.</p>
+            </div>
+        </div>
 
         <div id="checkout" class="page hidden">
-            <h2 class="section-title">Checkout</h2>
+            <h2 class="section-title">Account & Checkout</h2>
             <div class="auth-container card">
                 <section id="auth-section">
                     <form id="login-form" class="auth-form">
                         <h3>Login to Your Account</h3>
-                        <div class="form-group"><label for="login-email" class="form-label">Email</label><input type="email" id="login-email" class="form-input" required></div>
-                        <div class="form-group"><label for="login-password" class="form-label">Password</label><input type="password" id="login-password" class="form-input" required></div>
+                        <div class="form-group">
+                            <label for="login-email" class="form-label">Email</label>
+                            <input type="email" id="login-email" class="form-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="login-password" class="form-label">Password</label>
+                            <input type="password" id="login-password" class="form-input" required>
+                            <a href="#" onclick="handleForgotPassword()" class="forgot-password-link">Forgot Password?</a>
+                        </div>
                         <button type="submit" class="btn btn-primary full-width">Login</button>
                     </form>
                     <div class="auth-divider"><span>OR</span></div>
@@ -97,6 +117,7 @@
                     </form>
                     <div id="auth-error-message" class="status-message status-error hidden"></div>
                 </section>
+                
                 <section id="checkout-section" class="hidden">
                     <div class="user-header mb-3">
                         <p>Welcome, <span id="user-email-display" class="font-weight-600"></span></p>
@@ -107,20 +128,22 @@
                         <div class="form-group"><label for="shipping-name" class="form-label">Full Name</label><input type="text" id="shipping-name" class="form-input" required></div>
                         <div class="form-group"><label for="shipping-address" class="form-label">Address</label><input type="text" id="shipping-address" class="form-input" required></div>
                         <div class="payment-info">
-                            <p>Please pay <strong id="total-payment-amount">R0.00</strong> and upload proof of payment.</p>
+                            <p>Your order total is <strong id="total-payment-amount">R0.00</strong>.</p>
+                            <p class="font-weight-600">No orders will be processed without Proof of Payment being emailed to <strong>courtsbdressage@gmail.com</strong>.</p>
                         </div>
-                        <div class="form-group"><label for="proof-of-payment" class="form-label">Proof of Payment</label><input type="file" id="proof-of-payment" class="form-input" required></div>
                         <button type="submit" class="btn btn-primary full-width">Place Order</button>
                         <div id="order-status-message" class="status-message hidden mt-2"></div>
                     </form>
                 </section>
             </div>
         </div>
-
-        <div id="about" class="page hidden">
-            <div class="card about-content">
-                <h2 class="section-title">Our Story</h2>
-                <p class="story-text">Welcome! I'm the creator behind Mystic Manes. My journey started with my own horse, my real-life unicorn. I wanted a halter as strong and unique as our bond, so I decided to make my own.</p>
+        
+        <div id="thank-you" class="page hidden">
+            <div class="card text-center" style="max-width: 700px; margin: 2rem auto;">
+                <h2 class="section-title">Thank You! 🎉</h2>
+                <p class="hero-subtitle">Your order has been placed successfully. Someone will be in touch within the next 12 hours to confirm your order.</p>
+                <p class="font-weight-600">Please remember to email your Proof of Payment to courtsbdressage@gmail.com to finalize your order.</p>
+                <button onclick="showPage('home')" class="btn btn-primary mt-3">Back to Home</button>
             </div>
         </div>
     </main>
@@ -132,8 +155,6 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
-    
     <script src="js/app.js"></script>
 </body>
 </html>

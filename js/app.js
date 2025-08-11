@@ -1,86 +1,52 @@
 // ================================== NAVIGATION ==================================
 function showPage(pageId) {
-    // Hide all pages
     document.querySelectorAll('.page').forEach(page => page.classList.add('hidden'));
-    
-    // Show selected page with a fade-in animation
     const selectedPage = document.getElementById(pageId);
     if (selectedPage) {
         selectedPage.classList.remove('hidden');
         selectedPage.classList.add('fade-in');
         setTimeout(() => selectedPage.classList.remove('fade-in'), 500);
     }
-    
-    // Run page-specific logic when a page is shown
     if (pageId === 'cart') renderCart();
     if (pageId === 'checkout') updateCheckoutTotal();
 }
 
 // =============================== FIREBASE SETUP ===============================
-// IMPORTANT: Replace these with your actual Firebase project keys!
 const firebaseConfig = {
-    apiKey: "AIzaSyAywmtgbd8u2a_P82NVVwzAepKOuEibqWQ",
-    authDomain: "rope-halter-rainboww.firebaseapp.com",
-    projectId: "rope-halter-rainboww",
-    storageBucket: "rope-halter-rainboww.firebasestorage.app",
-    messagingSenderId: "626626308371",
-    appId: "1:626626308371:web:3c8bf50555f2a07be692e6",
-    measurementId: "G-J9H460J98N"
-  };
-
-// Initialize Firebase
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_PROJECT_ID.appspot.com",
+    messagingSenderId: "YOUR_SENDER_ID",
+    appId: "YOUR_APP_ID"
+};
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
-const storage = firebase.storage();
+// const storage = firebase.storage(); // No longer needed for POP upload
 
 // =============================== DATA & STATE ===============================
-const productData = {
-    price: 250.00,
-    colors: ['pink', 'cyan', 'green', 'purple', 'yellow'],
-};
+const productData = { price: 250.00, colors: ['pink', 'cyan', 'green', 'purple', 'yellow'] };
 const colorHexMap = { pink: '#EC4899', cyan: '#06B6D4', green: '#10B981', purple: '#8B5CF6', yellow: '#F59E0B' };
 let currentHalterDesign = { noseband: null, cheekpieces: null };
 
 // ============================ HELPER FUNCTIONS ==============================
-function showMessage(elementId, message, type) {
-    const element = document.getElementById(elementId);
-    element.textContent = message;
-    element.className = `status-message status-${type}`; // Resets classes
-    element.classList.remove('hidden');
-    
-    if (type === 'success') {
-        setTimeout(() => element.classList.add('hidden'), 4000);
-    }
-}
+function showMessage(elementId, message, type) { /* ... remains the same */ }
+function capitalizeFirst(str) { /* ... remains the same */ }
 
-function capitalizeFirst(str) {
-    return str ? str.charAt(0).toUpperCase() + str.slice(1) : '';
+// CHANGE 2: New function to update the cart counter in the nav
+function updateCartCounter() {
+    const cart = JSON.parse(localStorage.getItem('mysticManesCart')) || [];
+    const counter = document.getElementById('cart-counter');
+    counter.textContent = cart.length;
+    // Animate the counter when an item is added
+    counter.style.transform = 'scale(1.2)';
+    setTimeout(() => { counter.style.transform = 'scale(1)'; }, 200);
 }
 
 // ============================ SHOP PAGE LOGIC ===============================
-function createColorSwatches(containerId, part) {
-    const container = document.getElementById(containerId);
-    productData.colors.forEach(color => {
-        const swatch = document.createElement('div');
-        swatch.className = 'color-swatch';
-        swatch.style.backgroundColor = colorHexMap[color];
-        swatch.onclick = () => selectColor(container, swatch, part, color);
-        container.appendChild(swatch);
-    });
-}
-
-function selectColor(container, selectedSwatch, part, color) {
-    container.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('selected'));
-    selectedSwatch.classList.add('selected');
-    currentHalterDesign[part] = color;
-    
-    // This updates the preview images
-    const imageElement = document.getElementById(`${part}-image`);
-    if (imageElement) {
-        imageElement.src = `images/${part}-${color}.png`;
-    }
-}
+function createColorSwatches(containerId, part) { /* ... remains the same */ }
+function selectColor(container, selectedSwatch, part, color) { /* ... remains the same */ }
 
 function addToCart() {
     if (!currentHalterDesign.noseband || !currentHalterDesign.cheekpieces) {
@@ -89,130 +55,101 @@ function addToCart() {
     }
     let cart = JSON.parse(localStorage.getItem('mysticManesCart')) || [];
     cart.push({
-        id: 'customHalter_' + Date.now(),
-        name: 'Custom Rope Halter',
-        price: productData.price,
-        design: { ...currentHalterDesign },
+        id: 'customHalter_' + Date.now(), name: 'Custom Rope Halter', price: productData.price, design: { ...currentHalterDesign },
     });
     localStorage.setItem('mysticManesCart', JSON.stringify(cart));
     showMessage('cart-feedback-message', '✨ Added to your cart!', 'success');
+    updateCartCounter(); // Update the counter when an item is added
 }
 
 // ============================= CART PAGE LOGIC ==============================
-function renderCart() {
-    const cart = JSON.parse(localStorage.getItem('mysticManesCart')) || [];
-    const container = document.getElementById('cart-items-container');
-    container.innerHTML = '';
-
-    if (cart.length === 0) {
-        document.getElementById('empty-cart-message').classList.remove('hidden');
-        document.getElementById('cart-summary').classList.add('hidden');
-    } else {
-        document.getElementById('empty-cart-message').classList.add('hidden');
-        document.getElementById('cart-summary').classList.remove('hidden');
-        
-        let subtotal = 0;
-        cart.forEach(item => {
-            subtotal += item.price;
-            container.innerHTML += `
-                <div class="cart-item">
-                    <div class="cart-item-details">
-                        <h4>${item.name}</h4>
-                        <p>Noseband: ${capitalizeFirst(item.design.noseband)}</p>
-                        <p>Cheek Pieces: ${capitalizeFirst(item.design.cheekpieces)}</p>
-                    </div>
-                    <div class="cart-item-price">R${item.price.toFixed(2)}</div>
-                    <button class="remove-btn" onclick="removeItemFromCart('${item.id}')"><i class="fas fa-trash"></i></button>
-                </div>`;
-        });
-        document.getElementById('cart-total').textContent = `R${subtotal.toFixed(2)}`;
-    }
-}
+function renderCart() { /* ... remains the same */ }
 
 function removeItemFromCart(itemId) {
     let cart = JSON.parse(localStorage.getItem('mysticManesCart')) || [];
     cart = cart.filter(item => item.id !== itemId);
     localStorage.setItem('mysticManesCart', JSON.stringify(cart));
-    renderCart(); // Refresh the cart view
+    renderCart();
+    updateCartCounter(); // Update the counter when an item is removed
 }
 
 // =========================== CHECKOUT PAGE LOGIC ============================
-auth.onAuthStateChanged(user => {
-    const authSection = document.getElementById('auth-section');
-    const checkoutSection = document.getElementById('checkout-section');
-    if (user) {
-        authSection.classList.add('hidden');
-        checkoutSection.classList.remove('hidden');
-        document.getElementById('user-email-display').textContent = user.email;
-    } else {
-        authSection.classList.remove('hidden');
-        checkoutSection.classList.add('hidden');
-    }
-});
-
-function updateCheckoutTotal() {
-    const cart = JSON.parse(localStorage.getItem('mysticManesCart')) || [];
-    const total = cart.reduce((sum, item) => sum + item.price, 0);
-    document.getElementById('total-payment-amount').textContent = `R${total.toFixed(2)}`;
-}
-
-document.getElementById('login-form').addEventListener('submit', (e) => {
-    e.preventDefault();
-    const email = e.target['login-email'].value;
-    const password = e.target['login-password'].value;
-    auth.signInWithEmailAndPassword(email, password)
-        .catch(error => showMessage('auth-error-message', error.message, 'error'));
-});
-
-document.getElementById('signup-form').addEventListener('submit', (e) => {
-    e.preventDefault();
-    const email = e.target['signup-email'].value;
-    const password = e.target['signup-password'].value;
-    auth.createUserWithEmailAndPassword(email, password)
-        .catch(error => showMessage('auth-error-message', error.message, 'error'));
-});
-
+auth.onAuthStateChanged(user => { /* ... remains the same */ });
+function updateCheckoutTotal() { /* ... remains the same */ }
+document.getElementById('login-form').addEventListener('submit', (e) => { /* ... remains the same */ });
+document.getElementById('signup-form').addEventListener('submit', (e) => { /* ... remains the same */ });
 document.getElementById('logout-btn').addEventListener('click', () => auth.signOut());
-
+// CHANGE 3 & 4: Rewritten order submission logic
 document.getElementById('order-form').addEventListener('submit', async (e) => {
     e.preventDefault();
     const user = auth.currentUser;
-    const file = e.target['proof-of-payment'].files[0];
-    if (!user || !file) {
-        showMessage('order-status-message', "You must be logged in and select a proof of payment.", 'error');
+    if (!user) {
+        showMessage('order-status-message', "You must be logged in to place an order.", 'error');
         return;
     }
-    showMessage('order-status-message', 'Processing your order...', 'success');
+    showMessage('order-status-message', 'Placing your order...', 'success');
+
     try {
         const cart = JSON.parse(localStorage.getItem('mysticManesCart')) || [];
         const total = cart.reduce((sum, item) => sum + item.price, 0);
-        const newOrderRef = await db.collection('orders').add({
-            userId: user.uid, createdAt: firebase.firestore.FieldValue.serverTimestamp(), status: 'Pending', totalAmount: total, items: cart
+
+        // Save order to Firestore (without POP URL)
+        await db.collection('orders').add({
+            userId: user.uid,
+            userEmail: user.email,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+            status: 'Pending POP', // New status
+            totalAmount: total,
+            items: cart,
+            shippingInfo: {
+                name: document.getElementById('shipping-name').value,
+                address: document.getElementById('shipping-address').value,
+            }
         });
-        const filePath = `payment_proofs/${user.uid}/${newOrderRef.id}-${file.name}`;
-        const uploadTask = await storage.ref(filePath).put(file);
-        const downloadURL = await uploadTask.ref.getDownloadURL();
-        await newOrderRef.update({ paymentProofUrl: downloadURL });
+
+        // Clear the cart and update counter
         localStorage.removeItem('mysticManesCart');
-        showMessage('order-status-message', '✨ Your magical order has been placed!', 'success');
+        updateCartCounter();
         e.target.reset();
-        setTimeout(() => showPage('home'), 4000);
+
+        // Show the new "Thank You" page
+        showPage('thank-you');
+
     } catch (error) {
         showMessage('order-status-message', `Error: ${error.message}`, 'error');
     }
 });
 
+// Add this function to your app.js file
+function handleForgotPassword() {
+    const email = prompt("Please enter your email address to reset your password:");
+    
+    if (email) {
+        auth.sendPasswordResetEmail(email)
+            .then(() => {
+                alert("Password reset email sent! Please check your inbox.");
+            })
+            .catch((error) => {
+                alert(`Error: ${error.message}`);
+            });
+    }
+}
+
 // ============================ INITIALIZATION ==============================
 document.addEventListener('DOMContentLoaded', () => {
-    // Make sure functions called by inline onclicks are globally available
+    // Make functions globally available for inline onclicks
     window.showPage = showPage;
     window.removeItemFromCart = removeItemFromCart;
-
+    window.handleForgotPassword = handleForgotPassword; // 
+    
     // Initialize the Shop Page
     createColorSwatches('noseband-colors', 'noseband');
     createColorSwatches('cheekpieces-colors', 'cheekpieces');
     document.getElementById('add-to-cart-btn').addEventListener('click', addToCart);
     document.getElementById('product-price').textContent = `R${productData.price.toFixed(2)}`;
+    
+    // Set initial cart count on page load
+    updateCartCounter(); 
     
     // Show the home page by default
     showPage('home');
