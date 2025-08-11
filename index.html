@@ -4,605 +4,136 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mystic Manes Halters</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <style>
-        /* =============================================
-           Modern Mystic Manes Halters Stylesheet
-           ============================================= */
-
-        /* CSS Variables */
-        :root {
-            --primary-color: #8B5CF6;
-            --secondary-color: #EC4899;
-            --accent-color: #06B6D4;
-            --success-color: #10B981;
-            --warning-color: #F59E0B;
-            --dark-color: #1F2937;
-            --light-gray: #F3F4F6;
-            --medium-gray: #6B7280;
-            --white: #FFFFFF;
-            --gradient-primary: linear-gradient(135deg, #8B5CF6 0%, #EC4899 50%, #06B6D4 100%);
-            --gradient-secondary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-            --border-radius: 12px;
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-            color: var(--dark-color);
-            line-height: 1.6;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 1rem;
-        }
-
-        /* Header & Navigation */
-        .header {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            box-shadow: var(--shadow-sm);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            transition: var(--transition);
-        }
-
-        .nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 0;
-        }
-
-        .nav-brand {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.75rem;
-            font-weight: 700;
-            background: var(--gradient-primary);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-decoration: none;
-        }
-
-        .nav-menu {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-            align-items: center;
-        }
-
-        .nav-link {
-            text-decoration: none;
-            color: var(--medium-gray);
-            font-weight: 500;
-            padding: 0.5rem 1rem;
-            border-radius: var(--border-radius);
-            transition: var(--transition);
-            position: relative;
-        }
-
-        .nav-link:hover {
-            color: var(--primary-color);
-            background-color: rgba(139, 92, 246, 0.1);
-        }
-
-        .nav-link.cart-link {
-            background: var(--gradient-primary);
-            color: white;
-            padding: 0.75rem 1.5rem;
-        }
-
-        .nav-link.cart-link:hover {
-            transform: translateY(-1px);
-            box-shadow: var(--shadow-md);
-            color: white;
-        }
-
-        /* Hero Section */
-        .hero {
-            padding: 6rem 0;
-            text-align: center;
-            background: radial-gradient(circle at 50% 50%, rgba(139, 92, 246, 0.1) 0%, transparent 50%);
-        }
-
-        .hero-title {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(2.5rem, 5vw, 4rem);
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            background: var(--gradient-primary);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .hero-subtitle {
-            font-size: 1.25rem;
-            color: var(--medium-gray);
-            margin-bottom: 3rem;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        /* Buttons */
-        .btn {
-            display: inline-block;
-            padding: 1rem 2rem;
-            border-radius: var(--border-radius);
-            font-weight: 600;
-            text-decoration: none;
-            border: none;
-            cursor: pointer;
-            transition: var(--transition);
-            font-size: 1rem;
-        }
-
-        .btn-primary {
-            background: var(--gradient-primary);
-            color: white;
-            box-shadow: var(--shadow-md);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .btn-secondary {
-            background: white;
-            color: var(--primary-color);
-            border: 2px solid var(--primary-color);
-        }
-
-        .btn-secondary:hover {
-            background: var(--primary-color);
-            color: white;
-        }
-
-        .full-width {
-            width: 100%;
-        }
-
-        /* Cards */
-        .card {
-            background: white;
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow-md);
-            padding: 2rem;
-            transition: var(--transition);
-            border: 1px solid rgba(139, 92, 246, 0.1);
-        }
-
-        .card:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-xl);
-        }
-
-        /* Shop Section */
-        .shop-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            margin-top: 3rem;
-        }
-
-        .halter-visualizer {
-            position: relative;
-            background: white;
-            border-radius: var(--border-radius);
-            padding: 2rem;
-            box-shadow: var(--shadow-md);
-            aspect-ratio: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .halter-preview {
-            width: 100%;
-            max-width: 400px;
-            height: 400px;
-            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
-            border-radius: var(--border-radius);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            color: var(--medium-gray);
-            position: relative;
-        }
-
-        .halter-preview i {
-            font-size: 4rem;
-            margin-bottom: 1rem;
-        }
-
-        .customization-panel {
-            background: white;
-            border-radius: var(--border-radius);
-            padding: 2rem;
-            box-shadow: var(--shadow-md);
-        }
-
-        .color-section {
-            margin-bottom: 2rem;
-        }
-
-        .color-section h3 {
-            margin-bottom: 1rem;
-            color: var(--dark-color);
-            font-weight: 600;
-        }
-
-        .color-swatches {
-            display: flex;
-            gap: 0.75rem;
-            flex-wrap: wrap;
-        }
-
-        .color-swatch {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            border: 3px solid transparent;
-            cursor: pointer;
-            transition: var(--transition);
-            position: relative;
-        }
-
-        .color-swatch:hover {
-            transform: scale(1.1);
-        }
-
-        .color-swatch.selected {
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.3);
-        }
-
-        .product-info {
-            margin-top: 2rem;
-            padding-top: 2rem;
-            border-top: 1px solid var(--light-gray);
-        }
-
-        .price {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--success-color);
-            margin: 1rem 0;
-        }
-
-        /* Section Titles */
-        .section-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.5rem;
-            font-weight: 600;
-            margin-bottom: 2rem;
-            text-align: center;
-            color: var(--dark-color);
-        }
-
-        /* Page Sections */
-        .page {
-            padding: 2rem 0;
-        }
-
-        /* Footer */
-        .footer {
-            background: var(--dark-color);
-            color: white;
-            text-align: center;
-            padding: 2rem 0;
-            margin-top: 4rem;
-        }
-
-        .footer p {
-            margin-bottom: 0.5rem;
-        }
-
-        /* Utility Classes */
-        .text-center { 
-            text-align: center; 
-        }
-
-        .mb-3 { 
-            margin-bottom: 1.5rem; 
-        }
-
-        .mt-3 { 
-            margin-top: 1.5rem; 
-        }
-
-        .hidden { 
-            display: none; 
-        }
-
-        /* Animations */
-        @keyframes fadeIn {
-            from { 
-                opacity: 0; 
-                transform: translateY(20px); 
-            }
-            to { 
-                opacity: 1; 
-                transform: translateY(0); 
-            }
-        }
-
-        .fade-in {
-            animation: fadeIn 0.6s ease-out;
-        }
-
-        /* Status Messages */
-        .status-message {
-            padding: 1rem;
-            border-radius: var(--border-radius);
-            margin: 1rem 0;
-            font-weight: 500;
-        }
-
-        .status-success {
-            background: rgba(16, 185, 129, 0.1);
-            color: var(--success-color);
-            border: 1px solid rgba(16, 185, 129, 0.3);
-        }
-
-        .status-error {
-            background: rgba(239, 68, 68, 0.1);
-            color: #dc2626;
-            border: 1px solid rgba(239, 68, 68, 0.3);
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .nav {
-                flex-direction: column;
-                gap: 1rem;
-            }
-
-            .nav-menu {
-                gap: 1rem;
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-
-            .shop-grid {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-
-            .hero {
-                padding: 4rem 0;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+
     <header class="header">
         <div class="container">
             <nav class="nav">
-                <a href="#" onclick="showPage('home')" class="nav-brand">
-                    <i class="fas fa-sparkles"></i> Mystic Manes
-                </a>
+                <a href="#" onclick="showPage('home')" class="nav-brand">Mystic Manes</a>
                 <ul class="nav-menu">
                     <li><a href="#" onclick="showPage('home')" class="nav-link">Home</a></li>
                     <li><a href="#" onclick="showPage('shop')" class="nav-link">Shop</a></li>
                     <li><a href="#" onclick="showPage('about')" class="nav-link">About</a></li>
-                    <li><a href="#" onclick="showPage('cart')" class="nav-link cart-link">
-                        <i class="fas fa-shopping-cart"></i> Cart
-                    </a></li>
-                    <li><a href="#" onclick="showPage('checkout')" class="nav-link">
-                        <i class="fas fa-user"></i> Account
-                    </a></li>
+                    <li><a href="#" onclick="showPage('cart')" class="nav-link cart-link"><i class="fas fa-shopping-cart"></i> Cart</a></li>
+                    <li><a href="#" onclick="showPage('checkout')" class="nav-link"><i class="fas fa-user"></i> Account</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
-    <main>
-        <!-- Home Page -->
+    <main class="container">
         <div id="home" class="page">
-            <div class="container">
-                <section class="hero">
-                    <h1 class="hero-title">Craft Your Dream Halter</h1>
-                    <p class="hero-subtitle">
-                        Design a one-of-a-kind rope halter with vibrant colors that reflect your horse's unique personality.
-                    </p>
-                    <a href="#" onclick="showPage('shop')" class="btn btn-primary">
-                        Start Creating <i class="fas fa-arrow-right"></i>
-                    </a>
+            <section class="hero">
+                <h1 class="hero-title">Craft Your Dream Halter</h1>
+                <p class="hero-subtitle">Design a one-of-a-kind rope halter with vibrant colors that reflect your horse's unique personality.</p>
+                <a href="#" onclick="showPage('shop')" class="btn btn-primary">Start Creating <i class="fas fa-arrow-right"></i></a>
+            </section>
+        </div>
+
+        <div id="shop" class="page hidden">
+            <h2 class="section-title">Design Your Perfect Halter</h2>
+            <div class="shop-grid">
+                <div class="halter-visualizer">
+                    <div class="halter-preview">
+                        <img src="images/halter-base.png" alt="Base halter" class="halter-layer">
+                        <img id="noseband-image" src="images/noseband-default.png" alt="Noseband" class="halter-layer">
+                        <img id="cheekpieces-image" src="images/cheekpieces-default.png" alt="Cheek Pieces" class="halter-layer">
+                    </div>
+                </div>
+                <div class="customization-panel">
+                    <div class="color-section">
+                        <h3><i class="fas fa-palette"></i> Noseband Color</h3>
+                        <div id="noseband-colors" class="color-swatches"></div>
+                    </div>
+                    <div class="color-section">
+                        <h3><i class="fas fa-palette"></i> Cheek Pieces Color</h3>
+                        <div id="cheekpieces-colors" class="color-swatches"></div>
+                    </div>
+                    <div class="product-info">
+                        <h3>Custom Rope Halter</h3>
+                        <div class="price" id="product-price">R250.00</div>
+                        <button id="add-to-cart-btn" class="btn btn-primary full-width"><i class="fas fa-cart-plus"></i> Add to Cart</button>
+                        <div id="cart-feedback-message" class="status-message hidden"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="cart" class="page hidden">
+            <h2 class="section-title">Your Shopping Cart</h2>
+            <div id="cart-items-container"></div>
+            <div id="empty-cart-message" class="text-center hidden">
+                <p>Your cart is empty.</p>
+            </div>
+            <div id="cart-summary" class="card hidden" style="max-width: 600px; margin: 2rem auto;">
+                <div class="summary-row total">
+                    <span>Total:</span>
+                    <span id="cart-total">R0.00</span>
+                </div>
+                <button onclick="showPage('checkout')" class="btn btn-primary full-width mt-3">Proceed to Checkout</button>
+            </div>
+        </div>
+
+        <div id="checkout" class="page hidden">
+            <h2 class="section-title">Checkout</h2>
+            <div class="auth-container card">
+                <section id="auth-section">
+                    <form id="login-form" class="auth-form">
+                        <h3>Login to Your Account</h3>
+                        <div class="form-group"><label for="login-email" class="form-label">Email</label><input type="email" id="login-email" class="form-input" required></div>
+                        <div class="form-group"><label for="login-password" class="form-label">Password</label><input type="password" id="login-password" class="form-input" required></div>
+                        <button type="submit" class="btn btn-primary full-width">Login</button>
+                    </form>
+                    <div class="auth-divider"><span>OR</span></div>
+                    <form id="signup-form" class="auth-form">
+                        <h3>Create a New Account</h3>
+                        <div class="form-group"><label for="signup-email" class="form-label">Email</label><input type="email" id="signup-email" class="form-input" required></div>
+                        <div class="form-group"><label for="signup-password" class="form-label">Password</label><input type="password" id="signup-password" class="form-input" required></div>
+                        <button type="submit" class="btn btn-secondary full-width">Sign Up</button>
+                    </form>
+                    <div id="auth-error-message" class="status-message status-error hidden"></div>
+                </section>
+                <section id="checkout-section" class="hidden">
+                    <div class="user-header mb-3">
+                        <p>Welcome, <span id="user-email-display" class="font-weight-600"></span></p>
+                        <button id="logout-btn" class="btn btn-secondary">Logout</button>
+                    </div>
+                    <form id="order-form">
+                        <h3>Shipping Information</h3>
+                        <div class="form-group"><label for="shipping-name" class="form-label">Full Name</label><input type="text" id="shipping-name" class="form-input" required></div>
+                        <div class="form-group"><label for="shipping-address" class="form-label">Address</label><input type="text" id="shipping-address" class="form-input" required></div>
+                        <div class="payment-info">
+                            <p>Please pay <strong id="total-payment-amount">R0.00</strong> and upload proof of payment.</p>
+                        </div>
+                        <div class="form-group"><label for="proof-of-payment" class="form-label">Proof of Payment</label><input type="file" id="proof-of-payment" class="form-input" required></div>
+                        <button type="submit" class="btn btn-primary full-width">Place Order</button>
+                        <div id="order-status-message" class="status-message hidden mt-2"></div>
+                    </form>
                 </section>
             </div>
         </div>
 
-        <!-- Shop Page -->
-        <div id="shop" class="page hidden">
-            <div class="container">
-                <h2 class="section-title">Design Your Perfect Halter</h2>
-                <div class="shop-grid">
-                    <div class="halter-visualizer">
-                        <div class="halter-preview">
-                            <i class="fas fa-horse"></i>
-                            <p>Halter Preview</p>
-                        </div>
-                    </div>
-                    
-                    <div class="customization-panel">
-                        <div class="color-section">
-                            <h3><i class="fas fa-palette"></i> Noseband Color</h3>
-                            <div id="noseband-colors" class="color-swatches"></div>
-                        </div>
-                        
-                        <div class="color-section">
-                            <h3><i class="fas fa-palette"></i> Cheek Pieces Color</h3>
-                            <div id="cheekpieces-colors" class="color-swatches"></div>
-                        </div>
-                        
-                        <div class="product-info">
-                            <h3>Custom Rope Halter</h3>
-                            <div class="price" id="product-price">R250.00</div>
-                            <button id="add-to-cart-btn" class="btn btn-primary full-width">
-                                <i class="fas fa-cart-plus"></i> Add to Cart
-                            </button>
-                            <div id="cart-feedback-message" class="status-message hidden"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- About Page -->
         <div id="about" class="page hidden">
-            <div class="container">
-                <div class="card" style="max-width: 800px; margin: 0 auto;">
-                    <div class="text-center mb-3">
-                        <h2 class="section-title">Our Story</h2>
-                    </div>
-                    
-                    <div>
-                        <h3><i class="fas fa-heart"></i> Our Mission</h3>
-                        <p style="font-size: 1.1rem; line-height: 1.8; color: var(--medium-gray);">
-                            Welcome! I'm the creator and chief dreamer behind Mystic Manes. My journey started with my own horse, my real-life unicorn. I wanted a halter that was as strong and unique as our bond, so I decided to make my own.
-                        </p>
-                        <p style="font-size: 1.1rem; line-height: 1.8; color: var(--medium-gray); margin-top: 1rem;">
-                            Every halter is handcrafted with love and attention to detail, using premium materials that ensure both beauty and durability. We believe that every horse deserves something as special as they are.
-                        </p>
-                    </div>
-                </div>
+            <div class="card about-content">
+                <h2 class="section-title">Our Story</h2>
+                <p class="story-text">Welcome! I'm the creator behind Mystic Manes. My journey started with my own horse, my real-life unicorn. I wanted a halter as strong and unique as our bond, so I decided to make my own.</p>
             </div>
         </div>
     </main>
 
     <footer class="footer">
-        <div class="container">
-            <p>&copy; 2025 Mystic Manes Halters. All rights reserved.</p>
-            <p><i class="fas fa-map-marker-alt"></i> Handcrafted in Olifantsfontein, South Africa</p>
-        </div>
+        <p>&copy; 2025 Mystic Manes Halters. All rights reserved.</p>
     </footer>
 
-    <script>
-        // Navigation
-        function showPage(pageId) {
-            document.querySelectorAll('.page').forEach(page => {
-                page.classList.add('hidden');
-            });
-            
-            const selectedPage = document.getElementById(pageId);
-            selectedPage.classList.remove('hidden');
-            selectedPage.classList.add('fade-in');
-            
-            setTimeout(() => {
-                selectedPage.classList.remove('fade-in');
-            }, 600);
-        }
-
-        // Product data
-        const productData = {
-            price: 250.00,
-            nosebandColors: ['pink', 'cyan', 'green', 'purple', 'yellow'],
-            cheekpieceColors: ['pink', 'cyan', 'green', 'purple', 'yellow'],
-        };
-
-        let currentHalterDesign = { 
-            noseband: 'default', 
-            cheekpieces: 'default' 
-        };
-
-        const colorHexMap = {
-            pink: '#EC4899',
-            cyan: '#06B6D4',
-            green: '#10B981',
-            purple: '#8B5CF6',
-            yellow: '#F59E0B'
-        };
-
-        // Create color swatches
-        function createColorSwatches(container, colors, part) {
-            container.innerHTML = '';
-            colors.forEach(color => {
-                const swatch = document.createElement('div');
-                swatch.className = 'color-swatch';
-                swatch.style.backgroundColor = colorHexMap[color] || color;
-                swatch.onclick = () => {
-                    selectColor(container, swatch, part, color);
-                };
-                container.appendChild(swatch);
-            });
-        }
-
-        function selectColor(container, selectedSwatch, part, color) {
-            container.querySelectorAll('.color-swatch').forEach(s => {
-                s.classList.remove('selected');
-            });
-            selectedSwatch.classList.add('selected');
-            currentHalterDesign[part] = color;
-        }
-
-        function addToCart() {
-            const feedback = document.getElementById('cart-feedback-message');
-            
-            if (currentHalterDesign.noseband === 'default' || currentHalterDesign.cheekpieces === 'default') {
-                showMessage(feedback, 'Please select colors for both parts!', 'error');
-                return;
-            }
-
-            let cart = JSON.parse(localStorage.getItem('mysticManesCart')) || [];
-            cart.push({
-                id: 'customHalter_' + Date.now(),
-                name: 'Custom Rope Halter',
-                price: productData.price,
-                design: { ...currentHalterDesign },
-            });
-            
-            localStorage.setItem('mysticManesCart', JSON.stringify(cart));
-            showMessage(feedback, '✨ Added to your cart!', 'success');
-        }
-
-        function showMessage(element, message, type) {
-            element.textContent = message;
-            element.className = `status-message status-${type}`;
-            element.classList.remove('hidden');
-            
-            if (type === 'success') {
-                setTimeout(() => {
-                    element.classList.add('hidden');
-                }, 3000);
-            }
-        }
-
-        // Initialize
-        document.addEventListener('DOMContentLoaded', () => {
-            createColorSwatches(
-                document.getElementById('noseband-colors'), 
-                productData.nosebandColors, 
-                'noseband'
-            );
-            createColorSwatches(
-                document.getElementById('cheekpieces-colors'), 
-                productData.cheekpieceColors, 
-                'cheekpieces'
-            );
-
-            document.getElementById('add-to-cart-btn').addEventListener('click', addToCart);
-            showPage('home');
-        });
-    </script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
+    
+    <script src="js/app.js"></script>
 </body>
 </html>
