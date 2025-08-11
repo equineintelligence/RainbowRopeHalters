@@ -16,7 +16,6 @@ const firebaseConfig = {
   apiKey: "AIzaSyAywmtgbd8u2a_P82NVVwzAepKOuEibqWQ",
   authDomain: "rope-halter-rainboww.firebaseapp.com",
   projectId: "rope-halter-rainboww",
-  storageBucket: "rope-halter-rainboww.firebasestorage.app",
   messagingSenderId: "626626308371",
   appId: "1:626626308371:web:3c8bf50555f2a07be692e6",
   measurementId: "G-J9H460J98N"
