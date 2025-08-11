@@ -4,141 +4,262 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mystic Manes Halters</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
+    
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
 </head>
 <body>
-
-    <header>
-        <nav>
-            <a href="#" onclick="showPage('home')" class="nav-logo">✨ Mystic Manes Halters ✨</a>
-            <ul>
-                <li><a href="#" onclick="showPage('home')">Home</a></li>
-                <li><a href="#" onclick="showPage('shop')">Shop 🛍️</a></li>
-                <li><a href="#" onclick="showPage('about')">Our Story</a></li>
-                <li><a href="#" onclick="showPage('cart')">Cart 🛒</a></li>
-                <li><a href="#" onclick="showPage('checkout')">Profile 👤</a></li>
-            </ul>
-        </nav>
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <a href="#" onclick="showPage('home')" class="nav-brand">
+                    <i class="fas fa-sparkles"></i> Mystic Manes
+                </a>
+                <ul class="nav-menu">
+                    <li><a href="#" onclick="showPage('home')" class="nav-link">Home</a></li>
+                    <li><a href="#" onclick="showPage('shop')" class="nav-link">Shop</a></li>
+                    <li><a href="#" onclick="showPage('about')" class="nav-link">About</a></li>
+                    <li><a href="#" onclick="showPage('cart')" class="nav-link cart-link">
+                        <i class="fas fa-shopping-cart"></i> Cart
+                    </a></li>
+                    <li><a href="#" onclick="showPage('checkout')" class="nav-link">
+                        <i class="fas fa-user"></i> Account
+                    </a></li>
+                </ul>
+            </nav>
+        </div>
     </header>
 
     <main>
+        <!-- Home Page -->
         <div id="home" class="page">
-            <section class="hero-section">
-                <h1>Welcome to a World of Colour 🦄</h1>
-                <p>Design a one-of-a-kind rope halter for your magical steed.</p>
-                <a href="#" onclick="showPage('shop')" class="cta-button">Create Your Dream Halter Now!</a>
-            </section>
-            <section class="featured-image-section">
-                <img src="images/featured-horse.jpg" alt="A beautiful horse wearing a rainbow rope halter." style="width:100%; max-width: 800px; border-radius: 15px;">
-            </section>
+            <div class="container">
+                <section class="hero">
+                    <h1 class="hero-title">Craft Your Dream Halter</h1>
+                    <p class="hero-subtitle">
+                        Design a one-of-a-kind rope halter with vibrant colors that reflect your horse's unique personality.
+                    </p>
+                    <a href="#" onclick="showPage('shop')" class="btn btn-primary">
+                        Start Creating <i class="fas fa-arrow-right"></i>
+                    </a>
+                </section>
+                
+                <div class="text-center mt-3">
+                    <div class="featured-image-placeholder">
+                        <i class="fas fa-image"></i>
+                        <p>Featured Horse Image</p>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <div id="shop" class="page" style="display:none;">
-            <div class="shop-container">
-                <section class="halter-visualizer-section">
-                    <h2>Unleash Your Creativity! 🎨</h2>
+        <!-- Shop Page -->
+        <div id="shop" class="page hidden">
+            <div class="container">
+                <h2 class="section-title">Design Your Perfect Halter</h2>
+                <div class="shop-grid">
                     <div class="halter-visualizer">
-                        <img src="images/halter-base.png" alt="Base halter" class="halter-layer">
-                        <img id="noseband-image" src="images/noseband-default.png" alt="Noseband" class="halter-layer">
-                        <img id="cheekpieces-image" src="images/cheekpieces-default.png" alt="Cheek Pieces" class="halter-layer">
-                    </div>
-                </section>
-                <section class="customization-section">
-                    <h3>1. Choose Noseband Colour</h3>
-                    <div id="noseband-colors" class="color-options"></div>
-                    <h3>2. Choose Cheek Piece Colour</h3>
-                    <div id="cheekpieces-colors" class="color-options"></div>
-                    <div class="product-info">
-                        <h3>Your Custom Halter</h3>
-                        <p class="price" id="product-price">R0.00</p>
-                        <button id="add-to-cart-btn" class="cta-button">Add to Treasure Chest</button>
-                        <p id="cart-feedback-message"></p>
-                    </div>
-                </section>
-            </div>
-        </div>
-
-        <div id="cart" class="page" style="display:none;">
-            <h2>Your Treasure Chest 💎</h2>
-            <div id="cart-items-container"></div>
-            <section id="cart-summary" class="cart-summary" style="display: none;">
-                <h3>Order Summary</h3>
-                <div class="summary-line">
-                    <span>Subtotal:</span>
-                    <span id="cart-subtotal">R0.00</span>
-                </div>
-                <hr>
-                <div class="summary-line total">
-                    <span>Total:</span>
-                    <span id="cart-total">R0.00</span>
-                </div>
-                <a href="#" onclick="showPage('checkout')" class="cta-button">Proceed to Checkout</a>
-            </section>
-            <div id="empty-cart-message" style="display: none; text-align: center;">
-                <h3>Your treasure chest is empty!</h3>
-                <a href="#" onclick="showPage('shop')" class="cta-button">Back to Shop</a>
-            </div>
-        </div>
-        
-        <div id="about" class="page" style="display:none;">
-            <div class="about-page">
-                <h2>The Legend of Mystic Manes 📜</h2>
-                <img src="images/creator-photo.jpg" alt="Creator of Mystic Manes" style="width:100%; max-width: 400px; border-radius: 50%; margin: 20px auto; display: block;">
-                <section>
-                    <h3>Our Mission</h3>
-                    <p>Welcome! I'm the creator and chief dreamer behind Mystic Manes. My journey started with my own horse, my real-life unicorn. I wanted a halter that was as strong and unique as our bond, so I decided to make my own.</p>
-                </section>
-            </div>
-        </div>
-
-        <div id="checkout" class="page" style="display:none;">
-            <div class="checkout-page">
-                <h2>Final Steps to Magic! ✨</h2>
-                <section id="auth-section">
-                    <h3>Login or Create an Account</h3>
-                    <form id="login-form">
-                        <h4>Welcome Back!</h4>
-                        <input type="email" id="login-email" placeholder="Email Address" required>
-                        <input type="password" id="login-password" placeholder="Password" required>
-                        <button type="submit">Login</button>
-                    </form>
-                    <hr>
-                    <form id="signup-form">
-                        <h4>Create a New Account</h4>
-                        <input type="email" id="signup-email" placeholder="Email Address" required>
-                        <input type="password" id="signup-password" placeholder="Create a Password" required>
-                        <button type="submit">Sign Up</button>
-                    </form>
-                    <p id="auth-error-message" class="error"></p>
-                </section>
-                <section id="checkout-section" style="display: none;">
-                    <div id="user-profile-info">
-                        <p>Welcome, <span id="user-email-display"></span>! <button id="logout-btn">Logout</button></p>
-                    </div>
-                    <form id="order-form">
-                        <h3>Shipping Information</h3>
-                        <input type="text" id="shipping-name" placeholder="Full Name" required>
-                        <input type="text" id="shipping-address" placeholder="Street Address" required>
-                        <input type="text" id="shipping-city" placeholder="City" required>
-                        <input type="text" id="shipping-postal-code" placeholder="Postal Code" required>
-                        <h3>Payment Instructions</h3>
-                        <div class="payment-instructions">
-                            <p>Please pay <strong id="total-payment-amount">R0.00</strong> to the account below and upload your proof of payment.</p>
-                            <p><strong>Bank:</strong> FNB, <strong>Account:</strong> 1234567890, <strong>Reference:</strong> Your Order ID</p>
+                        <div class="halter-preview">
+                            <img src="images/halter-base.png" alt="Base halter" class="halter-layer">
+                            <img id="noseband-image" src="images/noseband-default.png" alt="Noseband" class="halter-layer">
+                            <img id="cheekpieces-image" src="images/cheekpieces-default.png" alt="Cheek Pieces" class="halter-layer">
                         </div>
-                        <label for="proof-of-payment">Upload Proof of Payment:</label>
-                        <input type="file" id="proof-of-payment" accept="image/*,.pdf" required>
-                        <button type="submit" class="cta-button">Place My Magical Order!</button>
-                        <p id="order-status-message"></p>
+                    </div>
+                    
+                    <div class="customization-panel">
+                        <div class="color-section">
+                            <h3><i class="fas fa-palette"></i> Noseband Color</h3>
+                            <div id="noseband-colors" class="color-swatches"></div>
+                        </div>
+                        
+                        <div class="color-section">
+                            <h3><i class="fas fa-palette"></i> Cheek Pieces Color</h3>
+                            <div id="cheekpieces-colors" class="color-swatches"></div>
+                        </div>
+                        
+                        <div class="product-info">
+                            <h3>Custom Rope Halter</h3>
+                            <div class="price" id="product-price">R250.00</div>
+                            <button id="add-to-cart-btn" class="btn btn-primary full-width">
+                                <i class="fas fa-cart-plus"></i> Add to Cart
+                            </button>
+                            <div id="cart-feedback-message" class="status-message hidden"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cart Page -->
+        <div id="cart" class="page hidden">
+            <div class="container">
+                <h2 class="section-title">Your Shopping Cart</h2>
+                <div id="cart-items-container"></div>
+                
+                <div id="cart-summary" class="card mt-3 hidden">
+                    <h3>Order Summary</h3>
+                    <div class="summary-row">
+                        <span>Subtotal:</span>
+                        <span id="cart-subtotal" class="font-weight-600">R0.00</span>
+                    </div>
+                    <hr>
+                    <div class="summary-row total">
+                        <span>Total:</span>
+                        <span id="cart-total">R0.00</span>
+                    </div>
+                    <a href="#" onclick="showPage('checkout')" class="btn btn-primary full-width mt-2">
+                        Proceed to Checkout <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+                
+                <div id="empty-cart-message" class="text-center card hidden">
+                    <i class="fas fa-shopping-cart empty-cart-icon"></i>
+                    <h3>Your cart is empty</h3>
+                    <p class="mb-3">Start shopping to add items to your cart</p>
+                    <a href="#" onclick="showPage('shop')" class="btn btn-primary">
+                        Continue Shopping
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- About Page -->
+        <div id="about" class="page hidden">
+            <div class="container">
+                <div class="card about-content">
+                    <div class="text-center mb-4">
+                        <div class="profile-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <h2 class="section-title">Our Story</h2>
+                    </div>
+                    
+                    <div>
+                        <h3><i class="fas fa-heart"></i> Our Mission</h3>
+                        <p class="story-text">
+                            Welcome! I'm the creator and chief dreamer behind Mystic Manes. My journey started with my own horse, my real-life unicorn. I wanted a halter that was as strong and unique as our bond, so I decided to make my own.
+                        </p>
+                        <p class="story-text">
+                            Every halter is handcrafted with love and attention to detail, using premium materials that ensure both beauty and durability. We believe that every horse deserves something as special as they are.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Checkout Page -->
+        <div id="checkout" class="page hidden">
+            <div class="container">
+                <h2 class="section-title">Checkout</h2>
+                
+                <!-- Authentication Section -->
+                <div id="auth-section" class="card auth-container">
+                    <h3 class="text-center mb-3">Login or Create Account</h3>
+                    
+                    <form id="login-form" class="auth-form">
+                        <h4><i class="fas fa-sign-in-alt"></i> Welcome Back</h4>
+                        <div class="form-group">
+                            <label class="form-label">Email Address</label>
+                            <input type="email" id="login-email" class="form-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Password</label>
+                            <input type="password" id="login-password" class="form-input" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary full-width">Login</button>
                     </form>
-                </section>
+                    
+                    <div class="auth-divider">
+                        <hr>
+                        <span>or</span>
+                        <hr>
+                    </div>
+                    
+                    <form id="signup-form" class="auth-form">
+                        <h4><i class="fas fa-user-plus"></i> Create New Account</h4>
+                        <div class="form-group">
+                            <label class="form-label">Email Address</label>
+                            <input type="email" id="signup-email" class="form-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Create Password</label>
+                            <input type="password" id="signup-password" class="form-input" required>
+                        </div>
+                        <button type="submit" class="btn btn-secondary full-width">Sign Up</button>
+                    </form>
+                    <p id="auth-error-message" class="error-message"></p>
+                </div>
+
+                <!-- Checkout Section -->
+                <div id="checkout-section" class="hidden checkout-container">
+                    <div class="card user-info">
+                        <div class="user-header">
+                            <div>
+                                <span>Welcome, </span>
+                                <strong id="user-email-display"></strong>
+                            </div>
+                            <button id="logout-btn" class="btn btn-secondary">
+                                <i class="fas fa-sign-out-alt"></i> Logout
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <form id="order-form" class="card">
+                        <h3><i class="fas fa-shipping-fast"></i> Shipping Information</h3>
+                        <div class="form-group">
+                            <label class="form-label">Full Name</label>
+                            <input type="text" id="shipping-name" class="form-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Street Address</label>
+                            <input type="text" id="shipping-address" class="form-input" required>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">City</label>
+                                <input type="text" id="shipping-city" class="form-input" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Postal Code</label>
+                                <input type="text" id="shipping-postal-code" class="form-input" required>
+                            </div>
+                        </div>
+                        
+                        <h3><i class="fas fa-credit-card"></i> Payment</h3>
+                        <div class="payment-info">
+                            <p><strong>Total Amount: </strong><span id="total-payment-amount">R0.00</span></p>
+                            <p><strong>Bank:</strong> FNB</p>
+                            <p><strong>Account:</strong> 1234567890</p>
+                            <p><strong>Reference:</strong> Your Order ID</p>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Upload Proof of Payment</label>
+                            <input type="file" id="proof-of-payment" class="form-input" accept="image/*,.pdf" required>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary full-width">
+                            <i class="fas fa-magic"></i> Place Order
+                        </button>
+                        
+                        <div id="order-status-message" class="status-message hidden"></div>
+                    </form>
+                </div>
             </div>
         </div>
     </main>
 
-    <footer>
-        <p>&copy; 2025 Mystic Manes Halters. All rights reserved.</p>
-        <p>Handcrafted with magic in Olifantsfontein, South Africa 🇿🇦</p>
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Mystic Manes Halters. All rights reserved.</p>
+            <p><i class="fas fa-map-marker-alt"></i> Handcrafted in Olifantsfontein, South Africa</p>
+        </div>
     </footer>
 
     <script src="js/app.js"></script>
